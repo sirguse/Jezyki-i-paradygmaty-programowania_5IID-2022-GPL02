@@ -1,0 +1,17 @@
+from functools import reduce
+
+zadania = [
+    {"czas_wykonania": 3, "nagroda": 100},
+    {"czas_wykonania": 1, "nagroda": 50},
+    {"czas_wykonania": 2, "nagroda": 75},
+]
+
+#Funkcyjne podejście
+def optymalizacja_zadan_funkcyjnie(zadania):
+    zadania_posortowane = sorted(zadania, key=lambda zadanie: zadanie["czas_wykonania"])
+    calkowity_czas_oczekiwania = reduce(lambda acc, zadanie: (acc[0] + acc[1], acc[1] + zadanie["czas_wykonania"]), zadania_posortowane, (0, 0))[0]
+    return zadania_posortowane, calkowity_czas_oczekiwania
+
+optymalna_kolejnosc, czas_oczekiwania = optymalizacja_zadan_funkcyjnie(zadania)
+print("Optymalna kolejność zadań (funkcyjnie):", optymalna_kolejnosc)
+print("Całkowity czas oczekiwania:", czas_oczekiwania)

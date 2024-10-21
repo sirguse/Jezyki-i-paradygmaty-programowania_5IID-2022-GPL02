@@ -1,0 +1,27 @@
+def plackowy_proceduralny(items, pojemnosc):
+    n = len(items)
+    dp = [[0] * (pojemnosc + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        waga, wartosc = items[i - 1]
+        for w in range(1, pojemnosc + 1):
+            if waga <= w:
+                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - waga] + wartosc)
+            else:
+                dp[i][w] = dp[i - 1][w]
+
+    wybrane_przedmioty = []
+    w = pojemnosc
+    for i in range(n, 0, -1):
+        if dp[i][w] != dp[i - 1][w]:
+            wybrane_przedmioty.append(items[i - 1])
+            w -= items[i - 1][0]
+
+    return dp[n][pojemnosc], wybrane_przedmioty
+
+#waga,wartosc 
+przedmioty = [(2, 3), (3, 4), (4, 5), (5, 6)]
+pojemnosc_plecaka = 8
+maks_wartosc, wybrane_przedmioty = plackowy_proceduralny(przedmioty, pojemnosc_plecaka)
+
+print(f'Maksymalna wartość: {maks_wartosc}, Wybrane przedmioty: {wybrane_przedmioty}')
