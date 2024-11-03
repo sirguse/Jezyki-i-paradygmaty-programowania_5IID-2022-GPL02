@@ -5,7 +5,7 @@ import numpy as np
 def Zadanie4(macierz, operacja):
 
     try:
-        result = reduce(lambda x,y: eval(operacja), macierz)
+        result = reduce(lambda x,y: eval(operacja), macierz) #lambda musi posiadać x,y ze względu na użycie metody reduce.
         return result
     
     except ValueError:
