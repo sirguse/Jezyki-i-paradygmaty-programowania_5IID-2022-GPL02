@@ -1,32 +1,31 @@
 from Employee import Employee
 import json
 import os
-class EmployeesManager:
-    FILE_PATH = "employess.json"
-    def __init__(self):
-        self.employess = []
-        self.load_employess()
 
+class EmployeesManager:
+    FILE_PATH = "Laboratorium3/employees.json"
+
+    def __init__(self):
+        self.employees = []  # Corrected spelling here
+        self.load_employess()
 
     def load_employess(self):
         if os.path.exists(self.FILE_PATH):
-            with open(self.FILE_PATH , 'r') as file: #r bo read
-                data = json.load(file)
-                self.employees = [Employee.from_dict(emp) for emp in data]
-
-
+            with open(self.FILE_PATH, 'r') as file:
+                try:
+                    data = json.load(file)
+                    self.employees = [Employee.from_dict(emp) for emp in data]
+                except json.JSONDecodeError:
+                    print("Błąd w odczycie pliku JSON. Plik może być pusty lub niepoprawny.")
+                    self.employees = [] 
 
     def save_employees(self):
-        with open(self.FILE_PATH, 'w') as file:
+        with open(self.FILE_PATH, "w") as file:
             json.dump([emp.to_dict() for emp in self.employees], file, indent=4)
 
-
-
-
-
-    def addEmployee(self, firstName,lastName,age,salary):
-        new_employee = Employee(firstName,lastName,age,salary)
-        self.employess.append(new_employee)
+    def addEmployee(self, firstName, lastName, age, salary):
+        new_employee = Employee(firstName, lastName, age, salary)
+        self.employees.append(new_employee)
         self.save_employees()
 
 
