@@ -4,7 +4,21 @@ class FrontendManager:
     def __init__(self):
         self.manager = EmployeesManager()
 
+    def login(self):
+        username = input("Login: ")
+        password = input("Password: ")
+
+        if username == 'admin' and password == 'admin':
+            return True
+        
+        else:
+            return False
+        
+    
+
     def run(self):
+        if not self.login():
+            return
         while True:
             print("\n1. Dodaj nowego pracownika")
             print("2. Wyświetl listę pracowników")
